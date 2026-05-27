@@ -15,14 +15,17 @@ RESULTS_DIR = ROOT / "resultados"
 
 
 def cargar_ventas(ruta: Path) -> pd.DataFrame:
+    # Lee el CSV y convierte la columna de fecha a datetime.
     return pd.read_csv(ruta, parse_dates=["sales_date"])
 
 
 def ventas_totales(df: pd.DataFrame) -> float:
+    # Suma todos los montos para obtener la venta total del año.
     return float(df["sales_amount"].sum())
 
 
 def ventas_por_producto(df: pd.DataFrame) -> pd.DataFrame:
+    # Agrupa por producto y devuelve cantidad y monto, ordenado de mayor a menor.
     return (
         df.groupby("producto")
         .agg(
@@ -34,6 +37,7 @@ def ventas_por_producto(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def ventas_por_mes(df: pd.DataFrame) -> pd.Series:
+    # Reagrupa las ventas en buckets mensuales (inicio de mes).
     return (
         df.set_index("sales_date")["sales_amount"]
         .resample("MS")
@@ -42,6 +46,7 @@ def ventas_por_mes(df: pd.DataFrame) -> pd.Series:
 
 
 def graficar_evolucion(serie: pd.Series, destino: Path) -> None:
+    # Dibuja la evolución mensual y guarda el PNG en `destino`.
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(serie.index, serie.values, marker="o", linewidth=2)
     ax.set_title("Evolución de ventas mensuales - 2024")

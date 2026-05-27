@@ -69,7 +69,7 @@ def main() -> None:
     producto_top = por_producto.index[0]
     cantidad_top = por_producto.loc[producto_top, "cantidad_ventas"]
     monto_top = por_producto.loc[producto_top, "monto_total"]
-
+    # Imprime en consola los resultados obtenidos.
     print("=" * 50)
     print("REPORTE DE VENTAS 2024")
     print("=" * 50)

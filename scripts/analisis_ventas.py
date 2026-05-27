@@ -69,25 +69,36 @@ def main() -> None:
     producto_top = por_producto.index[0]
     cantidad_top = por_producto.loc[producto_top, "cantidad_ventas"]
     monto_top = por_producto.loc[producto_top, "monto_total"]
-    # Imprime en consola los resultados obtenidos.
-    print("=" * 50)
-    print("REPORTE DE VENTAS 2024")
-    print("=" * 50)
-    print(f"\nVentas totales: ${total:,.0f}")
-    print(
-        f"\nProducto más vendido: {producto_top} "
-        f"({cantidad_top} ventas, ${monto_top:,.0f})"
-    )
-    print("\nVentas por producto:")
-    print(por_producto.to_string())
-    print("\nVentas por mes:")
+
+    # Arma el reporte como lista de líneas para imprimirlo y guardarlo a la vez.
+    lineas = [
+        "=" * 50,
+        "REPORTE DE VENTAS 2024",
+        "=" * 50,
+        "",
+        f"Ventas totales: ${total:,.0f}",
+        "",
+        f"Producto más vendido: {producto_top} "
+        f"({cantidad_top} ventas, ${monto_top:,.0f})",
+        "",
+        "Ventas por producto:",
+        por_producto.to_string(),
+        "",
+        "Ventas por mes:",
+    ]
     for fecha, monto in mensual.items():
-        print(f"  {fecha:%Y-%m}: ${monto:,.0f}")
+        lineas.append(f"  {fecha:%Y-%m}: ${monto:,.0f}")
+
+    reporte = "\n".join(lineas)
+    print(reporte)
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    reporte_txt = RESULTS_DIR / "reporte_ventas.txt"
+    reporte_txt.write_text(reporte + "\n", encoding="utf-8")
     grafico = RESULTS_DIR / "evolucion_ventas.png"
     graficar_evolucion(mensual, grafico)
-    print(f"\nGráfico guardado en: {grafico}")
+    print(f"\nReporte guardado en: {reporte_txt}")
+    print(f"Gráfico guardado en: {grafico}")
 
 
 if __name__ == "__main__":

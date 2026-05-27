@@ -60,7 +60,8 @@ tp-organizacion/
 ├── scripts/
 │   └── analisis_ventas.py        # Script de análisis
 ├── resultados/
-│   └── evolucion_ventas.png      # Gráfico generado por el script
+│   ├── evolucion_ventas.png      # Gráfico generado por el script
+│   └── reporte_ventas.txt        # Reporte de indicadores en texto
 └── README.md
 ```
 
@@ -88,5 +89,6 @@ El script:
 1. Lee el archivo `datos/sales_sample_2024.csv`.
 2. Imprime en consola los indicadores calculados (ventas totales, producto
    más vendido, ventas por mes).
-3. Genera el gráfico de evolución mensual de ventas en
+3. Guarda el mismo reporte en `resultados/reporte_ventas.txt`.
+4. Genera el gráfico de evolución mensual de ventas en
    `resultados/evolucion_ventas.png`.
